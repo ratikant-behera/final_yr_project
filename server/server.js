@@ -89,7 +89,7 @@ const server = express();
 
 // ✅ Correct CORS setup to allow both frontend URLs
 const allowedOrigins = [
-    'http://localhost:5173',
+    // 'http://localhost:5173',
     'https://final-yr-project-1.onrender.com'
 ];
 
