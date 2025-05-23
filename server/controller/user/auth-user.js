@@ -110,7 +110,7 @@ const loginUser = async (req, res) => {
     if (!email || !password) {
         return res.json({
             success: false,
-            message: 'Email or password not found !'
+            message: 'Email or password not found!'
         });
     }
 
@@ -118,8 +118,8 @@ const loginUser = async (req, res) => {
         const checkUser = await userAuth.findOne({ email });
         if (!checkUser) {
             return res.json({
-                success: false,   // fixed typo: was 'succes'
-                message: 'User is not found !'
+                success: false,
+                message: 'User is not found!'
             });
         }
 
@@ -138,12 +138,16 @@ const loginUser = async (req, res) => {
             username: checkUser.username,
         }, 'CLIENT_SERVER_KEY', { expiresIn: '120m' });
 
+        // Cookie options for production (HTTPS)
         res.cookie('token', token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production', // true in prod, false locally
-            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-            maxAge: 1000 * 60 * 60 * 2 // optional: 2 hours expiry
-        }).json({
+            httpOnly: true,        // prevent JS access to cookie
+            secure: true,          // cookie only sent over HTTPS
+            sameSite: 'none',      // allow cross-site cookie
+            maxAge: 1000 * 60 * 60 * 2,  // 2 hours expiration
+            path: '/',             // available across entire domain
+        });
+
+        res.json({
             success: true,
             message: 'Log in successfully',
             data: {
