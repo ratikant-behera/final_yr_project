@@ -9,7 +9,7 @@ const initialState = {
 export const cmpRegistrationVendor = createAsyncThunk(
     'vendor/registration',
     async(formData) => {
-        const response = await axios.post('http://localhost:3500/api/auth/vendor/registration',formData);
+        const response = await axios.post('https://final-yr-project.onrender.com/api/auth/vendor/registration',formData);
 
         return response.data
     }
@@ -18,7 +18,7 @@ export const cmpRegistrationVendor = createAsyncThunk(
 export const addCitySlice  = createAsyncThunk(
     'vendor/addcity',
     async(formData) => {
-        const response = await axios.post('http://localhost:3500/api/auth/vendor/addcity',formData);
+        const response = await axios.post('https://final-yr-project.onrender.com/api/auth/vendor/addcity',formData);
 
         return response.data;
     }
@@ -27,7 +27,7 @@ export const addCitySlice  = createAsyncThunk(
 export const fetchAllCity = createAsyncThunk(
     'vendor/fetchAllCity',
     async({vendorid})=>{
-        const response = await axios.get(`http://localhost:3500/api/auth/vendor/fetchallcity/${vendorid}`);
+        const response = await axios.get(`https://final-yr-project.onrender.com/api/auth/vendor/fetchallcity/${vendorid}`);
 
         return response.data;
     }
@@ -36,7 +36,7 @@ export const fetchAllCity = createAsyncThunk(
 export const deleteCity = createAsyncThunk(
     'vendor/deletecity',
     async({vendorid,city})=>{
-        const response = await axios.delete(`http://localhost:3500/api/auth/vendor/deletecity/${vendorid}/${city}`);
+        const response = await axios.delete(`https://final-yr-project.onrender.com/api/auth/vendor/deletecity/${vendorid}/${city}`);
 
         return response.data;
     }
@@ -45,7 +45,7 @@ export const deleteCity = createAsyncThunk(
 export const updatePrice = createAsyncThunk(
     'vendor/updateprice',
     async({vendorid,city,formData})=> {
-        const response = await axios.put(`http://localhost:3500/api/auth/vendor/updateprice/${vendorid}/${city}`,formData);
+        const response = await axios.put(`https://final-yr-project.onrender.com/api/auth/vendor/updateprice/${vendorid}/${city}`,formData);
 
         return response.data;
     }
@@ -99,6 +99,5 @@ const vendorRegistrationSlice = createSlice({
         })
     }
 })
-
 
 export default vendorRegistrationSlice.reducer;

@@ -8,7 +8,7 @@ const initialState = {
 export const fetchCityPrice = createAsyncThunk(
     'user/city/fetchPrice',
     async({city})=>{
-        const response = await axios.get(`http://localhost:3500/api/prices/${city}`);
+        const response = await axios.get(`https://final-yr-project.onrender.com/api/prices/${city}`);
         return response.data;
     }
 )

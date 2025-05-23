@@ -9,7 +9,7 @@ const initialState  = {
 export const saveContact = createAsyncThunk(
     'api/saveSontact',
     async(formData)=>{
-        const response = await axios.post('http://localhost:3500/api/contact/save-contact',formData);
+        const response = await axios.post('https://final-yr-project.onrender.com/api/contact/save-contact', formData);
 
         return response.data;
     }
@@ -18,7 +18,7 @@ export const saveContact = createAsyncThunk(
 export const getContact = createAsyncThunk(
     'api/getContact',
     async(formData)=>{
-        const response = await axios.post('http://localhost:3500/api/contact/get-contacts',formData);
+        const response = await axios.post('https://final-yr-project.onrender.com/api/contact/get-contacts', formData);
 
         return response.data;
     }
@@ -38,10 +38,10 @@ const contactSlice = createSlice({
         }).addCase(getContact.pending , (state)=>{
             state.isLoading = true
         }).addCase(getContact.fulfilled , (state,action)=>{
-            state.isLoading = false,
+            state.isLoading = false
             state.contacts = action?.payload?.success ? action?.payload?.data : []
         }).addCase(getContact.rejected , (state,action)=>{
-            state.isLoading = false,
+            state.isLoading = false
             state.contacts  = []
         })
     }
