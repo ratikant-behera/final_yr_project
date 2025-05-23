@@ -139,7 +139,7 @@ const loginUser = async (req, res) => {
         }, 'CLIENT_SERVER_KEY', { expiresIn: '120m' });
 
         res.cookie('token', token, {
-            httpsOnly: true,
+            httpOnly: true,
             secure: process.env.NODE_ENV === 'production', // true in prod, false locally
             sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
             maxAge: 1000 * 60 * 60 * 2 // optional: 2 hours expiry
