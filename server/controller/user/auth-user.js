@@ -52,22 +52,75 @@ const registerUser = async (req, res) => {
     }
 }
 
+// const loginUser = async (req, res) => {
+//     const { email, password } = req.body;
+//     if (!email || !password) {
+//         return res.json({
+//             success: false,
+//             message: 'Email or password not found !'
+//         })
+//     }
+
+//     try {
+//         const checkUser = await userAuth.findOne({ email });
+//         if (!checkUser) {
+//             return res.json({
+//                 succes: false,
+//                 message: 'User is not found !'
+//             })
+//         }
+
+//         const checkPasswordMatch = await bcrypt.compare(password, checkUser.password);
+//         if (!checkPasswordMatch) {
+//             return res.json({
+//                 success: false,
+//                 message: 'Wrong password'
+//             })
+//         }
+
+//         const token = jwt.sign({
+//             id: checkUser._id,
+//             email: checkUser.email,
+//             role: checkUser.role,
+//             username: checkUser.username,
+//         }, 'CLIENT_SERVER_KEY', { expiresIn: '120m' });
+
+//         res.cookie('token', token, { httponly: true, secure: false, SameSite: 'none' }).json({
+//             success: true,
+//             message: 'Log in successfully',
+//             data: {
+//                 email: checkUser.email,
+//                 role: checkUser.role,
+//                 id: checkUser._id,
+//                 username: checkUser.username
+//             }
+//         })
+
+//     } catch (e) {
+//         console.log(e);
+//         res.status(500).json({
+//             success: false,
+//             message: 'Some error occurred'
+//         })
+//     }
+// }
+
 const loginUser = async (req, res) => {
     const { email, password } = req.body;
     if (!email || !password) {
         return res.json({
             success: false,
             message: 'Email or password not found !'
-        })
+        });
     }
 
     try {
         const checkUser = await userAuth.findOne({ email });
         if (!checkUser) {
             return res.json({
-                succes: false,
+                success: false,   // fixed typo: was 'succes'
                 message: 'User is not found !'
-            })
+            });
         }
 
         const checkPasswordMatch = await bcrypt.compare(password, checkUser.password);
@@ -75,7 +128,7 @@ const loginUser = async (req, res) => {
             return res.json({
                 success: false,
                 message: 'Wrong password'
-            })
+            });
         }
 
         const token = jwt.sign({
@@ -85,7 +138,12 @@ const loginUser = async (req, res) => {
             username: checkUser.username,
         }, 'CLIENT_SERVER_KEY', { expiresIn: '120m' });
 
-        res.cookie('token', token, { httponly: true, secure: false, SameSite: 'none' }).json({
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production', // true in prod, false locally
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+            maxAge: 1000 * 60 * 60 * 2 // optional: 2 hours expiry
+        }).json({
             success: true,
             message: 'Log in successfully',
             data: {
@@ -94,16 +152,17 @@ const loginUser = async (req, res) => {
                 id: checkUser._id,
                 username: checkUser.username
             }
-        })
+        });
 
     } catch (e) {
         console.log(e);
         res.status(500).json({
             success: false,
             message: 'Some error occurred'
-        })
+        });
     }
-}
+};
+
 
 const forgotPassword = async (req, res) => {
     try {
