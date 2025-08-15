@@ -73,7 +73,7 @@ const scrapRequest = require('../server/routers/user/scrap-request-route');
 
 // Connect to MongoDB
 try {
-    mongoose.connect('mongodb+srv://suchitrakumar098:Dalei123@e-kawadiwala.cqjs6.mongodb.net/')
+    mongoose.connect('mongodb+srv://beheraratikanta436:behera%40436@cluster0.13xkl.mongodb.net/')
         .then(() => {
             console.log("Mongo connected successfully");
         })
